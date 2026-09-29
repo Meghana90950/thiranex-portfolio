@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Get in touch via this fully accessible, semantic, and keyboard-tab navigable contact form utility.">
+    <title>Get In Touch | Contact Portfolio</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; line-height: 1.6; margin: 0; padding: 0; background-color: #fcfcfc; color: #222; }
+        header, nav, main, section, footer { padding: 20px; max-width: 900px; margin: 0 auto; }
+        nav { display: flex; gap: 20px; border-bottom: 2px solid #eaeaea; padding-bottom: 10px; }
+        nav a { text-decoration: none; color: #0056b3; font-weight: 600; padding: 5px 10px; border-radius: 4px; }
+        nav a:focus { outline: 3px solid #ffcc00; background-color: #fff9e6; }
+        nav a[aria-current="page"] { border-bottom: 3px solid #0056b3; color: #000; }
+        .form-group { margin-bottom: 20px; max-width: 500px; }
+        label { display: block; font-weight: 600; margin-bottom: 6px; }
+        input, textarea, button { width: 100%; padding: 12px; font-size: 1rem; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        input:focus, textarea:focus, button:focus { outline: 3px solid #ffcc00; border-color: transparent; }
+        button { background-color: #0056b3; color: white; border: none; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        button:hover { background-color: #004494; }
+        .skip-link { position: absolute; top: -40px; left: 0; background: #0056b3; color: white; padding: 8px; z-index: 100; transition: top 0.2s; text-decoration: none; }
+        .skip-link:focus { top: 0; outline: 3px solid #ffcc00; }
+    </style>
+</head>
+<body>
+
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+
+    <header role="banner">
+        <h1>Connect With Me</h1>
+        <nav role="navigation" aria-label="Primary Navigation">
+            <a href="index.html">Home</a>
+            <a href="contact.html" aria-current="page">Contact Me</a>
+        </nav>
+    </header>
+
+    <main id="main-content" role="main">
+        <section aria-labelledby="contact-heading">
+            <h2 id="contact-heading">Send an Inquiry</h2>
+            
+            <!-- Tab-Navigable, Standard Compliant Communication Form Layout -->
+            <form action="#" method="POST">
+                
+                <div class="form-group">
+                    <label for="user-name">Full Name (Required)</label>
+                    <input type="text" id="user-name" name="name" required aria-required="true" autocomplete="name">
+                </div>
+
+                <div class="form-group">
+                    <label for="user-email">Email Address (Required)</label>
+                    <input type="email" id="user-email" name="email" required aria-required="true" autocomplete="email">
+                </div>
+
+                <div class="form-group">
+                    <label for="user-msg">Message Content (Required)</label>
+                    <textarea id="user-msg" name="message" rows="6" required aria-required="true"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" aria-label="Submit message form data to administrator">Send Portfolio Message</button>
+                </div>
+
+            </form>
+        </section>
+    </main>
+
+    <footer role="contentinfo">
+        <p>&copy; 2026 Alex Developer. Engineered in alignment with comprehensive WCAG standards.</p>
+    </footer>
+
+</body>
+</html>
