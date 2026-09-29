@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A professional personal portfolio site built with strict adherence to modern HTML5 semantic standards and WCAG accessibility guidelines.">
+    <meta name="keywords" content="Portfolio, HTML5 Semantic Layout, Web Development, Accessible Design, SEO Optimization">
+    <title>Professional Developer Portfolio | Home</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; line-height: 1.6; margin: 0; padding: 0; background-color: #fcfcfc; color: #222; }
+        header, nav, main, section, footer { padding: 20px; max-width: 900px; margin: 0 auto; }
+        nav { display: flex; gap: 20px; border-bottom: 2px solid #eaeaea; padding-bottom: 10px; }
+        nav a { text-decoration: none; color: #0056b3; font-weight: 600; padding: 5px 10px; border-radius: 4px; }
+        nav a:focus { outline: 3px solid #ffcc00; background-color: #fff9e6; }
+        nav a[aria-current="page"] { border-bottom: 3px solid #0056b3; color: #000; }
+        .project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 20px; }
+        .card { border: 1px solid #e0e0e0; padding: 20px; border-radius: 6px; background: #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+        .skip-link { position: absolute; top: -40px; left: 0; background: #0056b3; color: white; padding: 8px; z-index: 100; transition: top 0.2s; text-decoration: none; }
+        .skip-link:focus { top: 0; outline: 3px solid #ffcc00; }
+    </style>
+</head>
+<body>
+
+    <!-- Accessible Skip Link for Keyboard Navigation -->
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+
+    <!-- Header Semantic Tag -->
+    <header role="banner">
+        <h1>Alex Developer</h1>
+        <!-- Nav Semantic Tag with Explicit ARIA Navigation Landmark -->
+        <nav role="navigation" aria-label="Primary Navigation">
+            <a href="index.html" aria-current="page">Home</a>
+            <a href="contact.html">Contact Me</a>
+        </nav>
+    </header>
+
+    <!-- Main Content Semantic Landmark -->
+    <main id="main-content" role="main">
+        
+        <!-- Section Semantic Element -->
+        <section aria-labelledby="about-heading">
+            <h2 id="about-heading">About Me</h2>
+            <p>Welcome! I specialize in creating functional, responsive, and universal digital platforms. This space showcases my latest development projects built under strict accessibility and performance framework structures.</p>
+        </section>
+
+        <!-- Section Semantic Element -->
+        <section aria-labelledby="projects-heading">
+            <h2 id="projects-heading">Featured Engineering Projects</h2>
+            <div class="project-grid">
+                
+                <!-- Article Semantic Elements for Independent Units -->
+                <article class="card">
+                    <h3>Enterprise E-Commerce Engine</h3>
+                    <p>An accessible storefront platform featuring keyboard-navigable filter models and distinct component accessibility patterns.</p>
+                    <a href="#" aria-label="Explore the Enterprise E-Commerce Engine application platform">Explore Project</a>
+                </article>
+
+                <article class="card">
+                    <h3>Synchronized Task Hub</h3>
+                    <p>A dynamic workflow suite optimized for structural screen reader tracking metrics and high contrast viewing configurations.</p>
+                    <a href="#" aria-label="Explore the Synchronized Task Hub asset tracker application">Explore Project</a>
+                </article>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer Semantic Landmark -->
+    <footer role="contentinfo">
+        <p>&copy; 2026 Alex Developer. Engineered in alignment with comprehensive WCAG standards.</p>
+    </footer>
+
+</body>
+</html>
