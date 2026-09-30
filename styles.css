@@ -1,1 +1,168 @@
+/* ==========================================================================
+   1. CUSTOM CSS VARIABLES (Dynamic Light / Dark Themes)
+   ========================================================================== */
+:root {
+    /* Default Light Theme Values */
+    --bg-primary: #f8f9fa;
+    --bg-surface: #ffffff;
+    --text-main: #212529;
+    --text-muted: #6c757d;
+    --accent-color: #0d6efd;
+    --border-color: #dee2e6;
+    --grid-gap: 1.5rem;
+}
+
+[data-theme="dark"] {
+    /* Dynamic Dark Theme Variables Override */
+    --bg-primary: #121212;
+    --bg-surface: #1e1e1e;
+    --text-main: #f8f9fa;
+    --text-muted: #a0a0a0;
+    --accent-color: #3985ff;
+    --border-color: #333333;
+}
+
+/* Base Document Styles */
+body {
+    background-color: var(--bg-primary);
+    color: var(--text-main);
+    font-family: system-ui, -apple-system, sans-serif;
+    margin: 0;
+    padding: 0;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* ==========================================================================
+   2. MOBILE-FIRST RESPONSIVE ARCHITECTURE (Base styles targets Mobile)
+   ========================================================================== */
+.theme-switcher {
+    display: flex;
+    justify-content: flex-end;
+    padding: 1rem;
+}
+
+.theme-switcher button {
+    background-color: var(--accent-color);
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* Header UI Components */
+.main-header {
+    text-align: center;
+    padding: 2rem 1rem;
+    background-color: var(--bg-surface);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.nav-menu ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.nav-menu a {
+    color: var(--accent-color);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.content-wrapper {
+    padding: 1rem;
+}
+
+/* ==========================================================================
+   3. FLEXBOX INTERIOR ALIGNMENT (Localized Components)
+   ========================================================================== */
+.about-card {
+    display: flex;
+    flex-direction: column; /* Vertical stacking default for mobile devices */
+    gap: 1rem;
+    background-color: var(--bg-surface);
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.bio-stats {
+    align-self: flex-start; /* Specific flex alignment layout rule */
+    background: var(--bg-primary);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+/* ==========================================================================
+   4. TWO-DIMENSIONAL CSS GRID (Base Mobile: Single Column Stack)
+   ========================================================================== */
+.portfolio-section {
+    margin-top: 3rem;
+}
+
+.projects-grid {
+    display: grid;
+    grid-template-columns: 1fr; /* Single column flow structure */
+    gap: var(--grid-gap);
+}
+
+.project-item {
+    background-color: var(--bg-surface);
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.main-footer {
+    text-align: center;
+    padding: 2rem;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-top: 4rem;
+    border-top: 1px solid var(--border-color);
+}
+
+/* ==========================================================================
+   5. RESPONSIVE MEDIA QUERIES (Progressive Enhancements for Desktop/Tablet)
+   ========================================================================== */
+
+/* Tablet Viewports Screens */
+@media (min-width: 768px) {
+    .content-wrapper {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem;
+    }
+
+    /* Transforming Grid into a Multi-Column Framework layout */
+    .projects-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    /* Horizontal Layout Alignment Shift via Flexbox styling rules */
+    .about-card {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+}
+
+/* Desktop Large Screen Viewports */
+@media (min-width: 1024px) {
+    .projects-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    /* Explicit multi-row/column spanning to form asymmetrical structural grids */
+    .item-featured {
+        grid-column: span 2;
+        grid-row: span 1;
+        border-left: 4px solid var(--accent-color);
+    }
+}
 
