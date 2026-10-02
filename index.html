@@ -3,6 +3,274 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Logic & State Management Task</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7f6;
+            display: flex;
+            justify-content: center;
+            padding: 40px 20px;
+            margin: 0;
+        }
+        .todo-container {
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 500px;
+        }
+        h1 {
+            margin-top: 0;
+            color: #333;
+            font-size: 24px;
+        }
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .filters {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .filter-btn {
+            background-color: #e4e6eb;
+            color: #333;
+            flex: 1;
+        }
+        .filter-btn.active {
+            background-color: #007bff;
+            color: white;
+        }
+        .todo-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .todo-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            gap: 10px;
+        }
+        .todo-item.completed .todo-text {
+            text-decoration: line-through;
+            color: #888;
+        }
+        .todo-text {
+            flex: 1;
+            font-size: 16px;
+        }
+        .edit-input {
+            flex: 1;
+            padding: 5px;
+            font-size: 16px;
+        }
+        .btn-edit {
+            background-color: #ffc107;
+            color: black;
+        }
+        .btn-edit:hover {
+            background-color: #e0a800;
+        }
+        .btn-delete {
+            background-color: #dc3545;
+        }
+        .btn-delete:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+
+<div class="todo-container">
+    <h1>To-Do List</h1>
+    
+    <!-- CREATE Section -->
+    <div class="input-group">
+        <input type="text" id="todo-input" placeholder="Add a new task...">
+        <button id="add-btn">Add Task</button>
+    </div>
+
+    <!-- FILTER Section -->
+    <div class="filters" id="filter-container">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="active">Active</button>
+        <button class="filter-btn" data-filter="completed">Completed</button>
+    </div>
+
+    <!-- READ / UPDATE / DELETE Section -->
+    <ul class="todo-list" id="todo-list"></ul>
+</div>
+
+<script>
+    // State Management
+    let todos = JSON.parse(localStorage.getItem('todos')) || [];
+    let currentFilter = 'all';
+
+    // DOM Elements
+    const todoInput = document.getElementById('todo-input');
+    const addBtn = document.getElementById('add-btn');
+    const todoList = document.getElementById('todo-list');
+    const filterContainer = document.getElementById('filter-container');
+
+    // Save state to localStorage automatically
+    function saveToLocalStorage() {
+        localStorage.setItem('todos', JSON.stringify(todos));
+    }
+
+    // Dynamic UI Rendering
+    function render() {
+        todoList.innerHTML = '';
+
+        // Apply filters
+        const filteredTodos = todos.filter(todo => {
+            if (currentFilter === 'active') return !todo.completed;
+            if (currentFilter === 'completed') return todo.completed;
+            return true; // 'all'
+        });
+
+        // Dynamic element creation
+        filteredTodos.forEach(todo => {
+            const li = document.createElement('li');
+            li.className = `todo-item ${todo.completed ? 'completed' : ''}`;
+            li.dataset.id = todo.id;
+
+            li.innerHTML = `
+                <input type="checkbox" class="toggle-checkbox" ${todo.completed ? 'checked' : ''}>
+                <span class="todo-text">${todo.text}</span>
+                <button class="btn-edit">Edit</button>
+                <button class="btn-delete">Delete</button>
+            `;
+
+            todoList.appendChild(li);
+        });
+    }
+
+    // CREATE: Add new item
+    function addTodo() {
+        const text = todoInput.value.trim();
+        if (text === '') return;
+
+        const newTodo = {
+            id: Date.now().toString(),
+            text: text,
+            completed: false
+        };
+
+        todos.push(newTodo);
+        saveToLocalStorage();
+        render();
+        todoInput.value = '';
+    }
+
+    addBtn.addEventListener('click', addTodo);
+    todoInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') addTodo();
+    });
+
+    // DELEGATED EVENT LISTENERS (Handles Update, Delete, Toggle Completion)
+    todoList.addEventListener('click', (e) => {
+        const target = e.target;
+        const li = target.closest('.todo-item');
+        if (!li) return;
+        
+        const id = li.dataset.id;
+        const todoIndex = todos.findIndex(t => t.id === id);
+
+        // Toggle Completed Status
+        if (target.classList.contains('toggle-checkbox')) {
+            todos[todoIndex].completed = target.checked;
+            saveToLocalStorage();
+            render();
+        }
+
+        // DELETE Functionality
+        if (target.classList.contains('btn-delete')) {
+            todos.splice(todoIndex, 1);
+            saveToLocalStorage();
+            render();
+        }
+
+        // UPDATE Functionality (Inline Editing inline toggle)
+        if (target.classList.contains('btn-edit')) {
+            const textSpan = li.querySelector('.todo-text');
+            const isEditing = li.classList.contains('editing');
+
+            if (!isEditing) {
+                // Switch to edit mode
+                li.classList.add('editing');
+                target.textContent = 'Save';
+                
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.className = 'edit-input';
+                input.value = textSpan.textContent;
+                
+                li.replaceChild(input, textSpan);
+                input.focus();
+            } else {
+                // Save edited changes
+                const input = li.querySelector('.edit-input');
+                const updatedText = input.value.trim();
+
+                if (updatedText !== '') {
+                    todos[todoIndex].text = updatedText;
+                    saveToLocalStorage();
+                }
+                
+                render();
+            }
+        }
+    });
+
+    // FILTER Event Listener via Delegation
+    filterContainer.addEventListener('click', (e) => {
+        if (!e.target.classList.contains('filter-btn')) return;
+
+        // Update active class UI
+        document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+        e.target.classList.add('active');
+
+        // Update status filter & re-render
+        currentFilter = e.target.dataset.filter;
+        render();
+    });
+
+    // Initial load view initialization
+    render();
+</script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Professional Portfolio</title>
     <link rel="stylesheet" href="styles.css">
 </head>
