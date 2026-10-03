@@ -3,6 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <h1>Weather Dashboard</h1>
+        
+        <!-- Search Functionality -->
+        <div class="search-box">
+            <input type="text" id="city-input" placeholder="Enter city name...">
+            <button id="search-btn">Search</button>
+        </div>
+
+        <!-- Dynamic Content Displays Here -->
+        <div id="weather-info" class="weather-card hidden">
+            <h2 id="city-name">City Name</h2>
+            <p id="weather-desc">Condition</p>
+            <div class="metrics">
+                <p>Temperature: <span id="temp">--</span>°C</p>
+                <p>Humidity: <span id="humidity">--</span>%</p>
+                <p>Wind Speed: <span id="wind">--</span> m/s</p>
+            </div>
+        </div>
+
+        <!-- Error Handling Notification -->
+        <div id="error-message" class="error-box hidden"></div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JavaScript Logic & State Management Task</title>
     <style>
         body {
